@@ -1,7 +1,6 @@
-package com.codeactuator.projectors.dao;
+package com.codeactuator.rocket.dao;
 
-import com.codeactuator.projectors.domain.Project;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codeactuator.rocket.domain.Project;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,7 @@ public class ProjectCustomRepositoryImpl implements ProjectCustomRepository {
 
 
     @Override
-    public void addResource(Integer projectId, Integer resourceId) {
+    public void addResource(Long projectId, Long resourceId) {
         Project project = entityManager.find(Project.class, projectId);
         project.getResources().add(resourceId);
         entityManager.merge(project);

@@ -1,9 +1,9 @@
-package com.codeactuator.projectors.controller;
+package com.codeactuator.rocket.controller;
 
-import com.codeactuator.projectors.dao.ProjectRepository;
-import com.codeactuator.projectors.domain.Project;
-import com.codeactuator.projectors.dto.ProjectDTO;
-import com.codeactuator.projectors.dto.WorkforceDTO;
+import com.codeactuator.rocket.dao.ProjectRepository;
+import com.codeactuator.rocket.domain.Project;
+import com.codeactuator.rocket.dto.ProjectDTO;
+import com.codeactuator.rocket.dto.WorkforceDTO;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
