@@ -18,3 +18,6 @@ eureka:
 user:
   name: Guest
 
+springdoc:
+  swagger-ui.path: /swagger-ui-custom.html
+
