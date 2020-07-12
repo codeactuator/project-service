@@ -1,5 +1,5 @@
-# project-service
-Projector Project Service
+# rocket-project-service
+Rocket Project Service
 
 #Swagger URL
-/swagger-ui-custom.html
+/swagger
