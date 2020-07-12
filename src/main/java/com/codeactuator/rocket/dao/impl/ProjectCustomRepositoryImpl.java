@@ -1,5 +1,6 @@
-package com.codeactuator.rocket.dao;
+package com.codeactuator.rocket.dao.impl;
 
+import com.codeactuator.rocket.dao.ProjectCustomRepository;
 import com.codeactuator.rocket.domain.Project;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
