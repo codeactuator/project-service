@@ -53,7 +53,7 @@ public class ProjectController {
 
     @HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
-    public ProjectDTO findById(@PathVariable("id")Integer projectId){
+    public ProjectDTO findById(@PathVariable("id")Long projectId){
         //System.out.println("WORKFORCE_SERVICE_URL: "+WORKFORCE_SERVICE_URL);
 
         Project project = projectRepository.findById(projectId).get();
@@ -73,7 +73,7 @@ public class ProjectController {
 
     @HystrixCommand(commandKey = "findById", groupKey = "findById", fallbackMethod = "fallBackFindById")
     @GetMapping("find/{id}")
-    public ProjectDTO find(@PathVariable("id")Integer projectId){
+    public ProjectDTO find(@PathVariable("id")Long projectId){
         //System.out.println("WORKFORCE_SERVICE_URL: "+WORKFORCE_SERVICE_URL);
 
         Project project = projectRepository.findById(projectId).get();
@@ -91,7 +91,7 @@ public class ProjectController {
         return projectDTO;
     }
 
-    public ProjectDTO fallBackFindById(Integer projectId){
+    public ProjectDTO fallBackFindById(Long projectId){
         Project project = projectRepository.findById(projectId).get();
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(project.getId());

@@ -53,6 +53,7 @@ public class ProjectServiceApplication implements ApplicationRunner {
 		));
 
 
+
 		projectRepository
 				.findAll()
 				.forEach(project -> {
@@ -60,9 +61,11 @@ public class ProjectServiceApplication implements ApplicationRunner {
 					projectRepository.addResource(project.getId(), 1L);
 				});
 
+		/*
 		projectRepository
 				.findAll()
 				.forEach(System.out::println);
 
+		*/
 	}
 }
