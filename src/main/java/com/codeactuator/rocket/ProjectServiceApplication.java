@@ -2,7 +2,11 @@ package com.codeactuator.rocket;
 
 
 import com.codeactuator.rocket.dao.ProjectRepository;
+import com.codeactuator.rocket.dao.RoleRepository;
+import com.codeactuator.rocket.dao.WorkforceRepository;
 import com.codeactuator.rocket.domain.Project;
+import com.codeactuator.rocket.domain.Role;
+import com.codeactuator.rocket.domain.Workforce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -36,6 +40,12 @@ public class ProjectServiceApplication implements ApplicationRunner {
 	@Autowired
 	private ProjectRepository projectRepository;
 
+	@Autowired
+	private WorkforceRepository workforceRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectServiceApplication.class, args);
@@ -57,8 +67,13 @@ public class ProjectServiceApplication implements ApplicationRunner {
 		projectRepository
 				.findAll()
 				.forEach(project -> {
-					//resourceRepository.addResource(project.getId(), 1);
-					projectRepository.addResource(project.getId(), 1L);
+					Role role = new Role("Developer");
+					roleRepository.save(role);
+
+					Workforce workforce = new Workforce("SHK", "SHEKHAR KUMAR", "shekhar@gmail.com", role);
+					workforceRepository.save(workforce);
+
+					projectRepository.addResource(project.getId(), workforce);
 				});
 
 		/*

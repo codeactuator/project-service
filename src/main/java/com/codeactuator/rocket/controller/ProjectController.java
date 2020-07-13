@@ -54,40 +54,14 @@ public class ProjectController {
     @HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
     public ProjectDTO findById(@PathVariable("id")Long projectId){
-        //System.out.println("WORKFORCE_SERVICE_URL: "+WORKFORCE_SERVICE_URL);
-
         Project project = projectRepository.findById(projectId).get();
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(project.getId());
         projectDTO.setName(project.getName());
 
-        //Application application = eurekaClient.getApplication("WORKFORCE-SERVICE");
-        //RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<WorkforceDTO> stringResponseEntity =
                 restTemplate.getForEntity("http://WORKFORCE-SERVICE/workforce/" + project.getId(), WorkforceDTO.class);
-
         projectDTO.getResources().add(stringResponseEntity.getBody());
-
-        return projectDTO;
-    }
-
-    @HystrixCommand(commandKey = "findById", groupKey = "findById", fallbackMethod = "fallBackFindById")
-    @GetMapping("find/{id}")
-    public ProjectDTO find(@PathVariable("id")Long projectId){
-        //System.out.println("WORKFORCE_SERVICE_URL: "+WORKFORCE_SERVICE_URL);
-
-        Project project = projectRepository.findById(projectId).get();
-        ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.setId(project.getId());
-        projectDTO.setName(project.getName());
-
-        //Application application = eurekaClient.getApplication("WORKFORCE-SERVICE");
-        //RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<WorkforceDTO> stringResponseEntity =
-                restTemplate.getForEntity("http://WORKFORCE-SERVICE/workforce/" + project.getId(), WorkforceDTO.class);
-
-        projectDTO.getResources().add(stringResponseEntity.getBody());
-
         return projectDTO;
     }
 
