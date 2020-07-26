@@ -1,5 +1,6 @@
 package com.codeactuator.rocket.controller;
 
+import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
 import com.codeactuator.rocket.dto.ProjectDTO;
@@ -24,22 +25,19 @@ import java.util.List;
 public class ProjectController {
 
 
-    //@Value("${workforce.service.url}")
-    //private String WORKFORCE_SERVICE_URL;
-
-    @Value("${message: Hello Default!}")
-    private String message;
-
     @Autowired
     private ProjectRepository projectRepository;
 
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ConfigProperties configProperties;
+
 
     @GetMapping("/ping")
     public String ping(){
-        return message;
+        return configProperties.getMessage() + configProperties.getEnv();
     }
 
     @GetMapping
