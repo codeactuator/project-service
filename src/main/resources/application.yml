@@ -5,6 +5,12 @@ spring:
   application:
     name: project-service
 
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
 eureka:
   client:
     registerWithEureka: true

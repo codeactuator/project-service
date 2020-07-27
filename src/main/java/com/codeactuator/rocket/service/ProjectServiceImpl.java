@@ -17,9 +17,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     @Override
     public Project create(Project project) {
         return projectRepository.save(project);
