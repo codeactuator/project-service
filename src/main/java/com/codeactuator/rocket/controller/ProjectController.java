@@ -45,7 +45,7 @@ public class ProjectController {
         List<Project> projects = new ArrayList<>();
         projectRepository
                 .findAll()
-                .forEach(project -> projects.add(project));
+                .forEach(projects::add);
         return  projects;
     }
 
