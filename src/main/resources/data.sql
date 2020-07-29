@@ -1,3 +1,15 @@
+---------------USERPROFILE-----------------------
+--public class UserProfile {
+--@Id
+--@GeneratedValue
+--private Long id;
+--private String name;
+
+INSERT INTO USERPROFILE (id, name) values (1, 'Developer');
+INSERT INTO USERPROFILE (id, name) values (2, 'Manager');
+
+
+
 -----------------TASKSTATUS----------------
 --public class TaskStatus {
 --@Id
@@ -47,6 +59,18 @@ INSERT INTO TASK (id, name, taskType, assignee, assignedBy, createdOn, status, s
 INSERT INTO TASK (id, name, taskType, assignee, assignedBy, createdOn, status, subTasks, logs) values (2, 'Backend implementation for Login feature', 1, 1, 2, null, 1, null, null);
 
 
+--------------TASKLOG------------
+--public class TaskLog {
+--@Id
+--@GeneratedValue
+--private Long id;
+--private String description;
+--private float spentHrs;
+--private Date createdDate;
+
+INSERT INTO TASKLOG (id, description, spentHrs, createdDate) values (1, 'Making analysis on task', 4.5, null);
+INSERT INTO TASKLOG (id, description, spentHrs, createdDate) values (2, 'Development and Unit Testing', 6, null);
+
 
 -----------------PROJECT----------------
 --public class Project{
@@ -71,10 +95,9 @@ INSERT INTO PROJECT (id, name, tasks, resources, created) values (1, 'Create Log
 --@Id
 --@GeneratedValue
 --private Long id;
---private String employeeCode;
 --private String name;
 --private String email;
 --@OneToOne
---private Role role;
-INSERT INTO WORKFORCE (id, employeeCode, name, email) values (1, 'E1001', 'Shekhar KUMAR', 'shekharkumargupta@gmail.com');
-INSERT INTO WORKFORCE (id, employeeCode, name, email) values (2, 'E1002', 'Lakhvir BANSAL', 'lakhvir@gmail.com');
+--private UserProfile userProfile;
+INSERT INTO WORKFORCE (id, name, email, userProfile) values (1, 'Shekhar KUMAR', 'shekharkumargupta@gmail.com', 1);
+INSERT INTO WORKFORCE (id, name, email, userProfile) values (2, 'Lakhvir BANSAL', 'lakhvir@gmail.com', 2);

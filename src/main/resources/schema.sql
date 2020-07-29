@@ -1,3 +1,19 @@
+---------------USERPROFILE-----------------------
+--public class UserProfile {
+--@Id
+--@GeneratedValue
+--private Long id;
+--private String name;
+
+DROP TABLE IF EXISTS USERPROFILE;
+
+CREATE TABLE USERPROFILE (
+  id INT AUTO_INCREMENT  PRIMARY KEY,
+  name VARCHAR(250) NOT NULL
+);
+
+
+
 -----------------TASKSTATUS----------------
 --public class TaskStatus {
 --@Id
@@ -63,6 +79,26 @@ CREATE TABLE TASK (
 );
 
 
+--------------TASKLOG------------
+--public class TaskLog {
+--@Id
+--@GeneratedValue
+--private Long id;
+--private String description;
+--private float spentHrs;
+--private Date createdDate;
+
+DROP TABLE IF EXISTS TASKLOG;
+
+CREATE TABLE TASKLOG (
+  id INT AUTO_INCREMENT  PRIMARY KEY,
+  description VARCHAR(400) NOT NULL,
+  spentHrs FLOAT DEFAULT NULL,
+  createdDate DATE DEFAULT NULL
+);
+
+
+
 -----------------PROJECT----------------
 --public class Project{
 --@Id
@@ -87,14 +123,14 @@ CREATE TABLE PROJECT (
 
 
 -----------------WORKFORCE----------------
+--public class Workforce {
 --@Id
 --@GeneratedValue
 --private Long id;
---private String employeeCode;
 --private String name;
 --private String email;
 --@OneToOne
---private Role role;
+--private UserProfile userProfile;
 
 
 
@@ -102,8 +138,7 @@ DROP TABLE IF EXISTS WORKFORCE;
 
 CREATE TABLE WORKFORCE (
   id INT AUTO_INCREMENT  PRIMARY KEY,
-  employeeCode VARCHAR(250) NOT NULL,
   name VARCHAR(250) NOT NULL,
   email VARCHAR(250) DEFAULT NULL,
-  role INT DEFAULT NULL
+  userProfile INT DEFAULT NULL
 );

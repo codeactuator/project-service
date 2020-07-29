@@ -3,13 +3,9 @@ package com.codeactuator.rocket.controller;
 import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
-import com.codeactuator.rocket.dto.ProjectDTO;
-import com.codeactuator.rocket.dto.WorkforceDTO;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/project")
+@RequestMapping(value = "/projects")
 @RefreshScope
 public class ProjectController {
 
@@ -51,7 +47,8 @@ public class ProjectController {
 
     @HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
-    public ProjectDTO findById(@PathVariable("id")Long projectId){
+    public Project findById(@PathVariable("id")Long projectId){
+        /*
         Project project = projectRepository.findById(projectId).get();
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(project.getId());
@@ -61,13 +58,20 @@ public class ProjectController {
                 restTemplate.getForEntity("http://WORKFORCE-SERVICE/workforce/" + project.getId(), WorkforceDTO.class);
         projectDTO.getResources().add(stringResponseEntity.getBody());
         return projectDTO;
+        */
+
+        return projectRepository.findById(projectId).get();
+
     }
 
-    public ProjectDTO fallBackFindById(Long projectId){
+    public Project fallBackFindById(Long projectId){
         Project project = projectRepository.findById(projectId).get();
+        /*
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(project.getId());
         projectDTO.setName(project.getName());
         return projectDTO;
+        */
+        return project;
     }
 }

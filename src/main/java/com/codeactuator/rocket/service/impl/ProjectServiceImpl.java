@@ -3,6 +3,7 @@ package com.codeactuator.rocket.service.impl;
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
 import com.codeactuator.rocket.service.ProjectService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -43,14 +44,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findById(Long projectId) {
-        return projectRepository.findById(projectId).get();
+        Project project = projectRepository.findById(projectId).get();
+        Hibernate.initialize(project.getTasks());
+        return project;
     }
 
     @Override
     public Collection<Project> findAll() {
         List<Project> projects = new ArrayList<>();
         projectRepository.findAll()
-                .forEach(project -> projects.add(project));
+                .forEach(project -> {
+                    Hibernate.initialize(project.getTasks());
+                    projects.add(project);
+                });
         return projects;
     }
 
