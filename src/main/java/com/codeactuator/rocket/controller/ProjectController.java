@@ -2,18 +2,20 @@ package com.codeactuator.rocket.controller;
 
 import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dao.ProjectRepository;
-import com.codeactuator.rocket.domain.Project;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.codeactuator.rocket.dto.ProjectDTO;
+import com.codeactuator.rocket.error.ProjectNotFoundException;
+import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/projects")
@@ -23,6 +25,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectService projectService;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -37,41 +42,21 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Project> findAll(){
-        List<Project> projects = new ArrayList<>();
-        projectRepository
-                .findAll()
-                .forEach(projects::add);
-        return  projects;
+    public Collection<ProjectDTO> findAll(){
+        return projectService.findAll().get();
     }
 
-    @HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
+    //@HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
-    public Project findById(@PathVariable("id")Long projectId){
-        /*
-        Project project = projectRepository.findById(projectId).get();
-        ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.setId(project.getId());
-        projectDTO.setName(project.getName());
-
-        ResponseEntity<WorkforceDTO> stringResponseEntity =
-                restTemplate.getForEntity("http://WORKFORCE-SERVICE/workforce/" + project.getId(), WorkforceDTO.class);
-        projectDTO.getResources().add(stringResponseEntity.getBody());
-        return projectDTO;
-        */
-
-        return projectRepository.findById(projectId).get();
-
+    public ProjectDTO findById(@PathVariable("id")Long projectId){
+        return projectService.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException(String.valueOf(projectId)));
     }
 
-    public Project fallBackFindById(Long projectId){
-        Project project = projectRepository.findById(projectId).get();
-        /*
+    public ResponseEntity<ProjectDTO> fallBackFindById(Long projectId){
+        //Project project = projectRepository.findById(projectId).get();
+
         ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.setId(project.getId());
-        projectDTO.setName(project.getName());
-        return projectDTO;
-        */
-        return project;
+        return ResponseEntity.ok(projectDTO);
     }
 }
