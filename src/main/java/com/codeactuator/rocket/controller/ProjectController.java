@@ -8,17 +8,14 @@ import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/projects")
+@RequestMapping(value = "v1/projects")
 @RefreshScope
 public class ProjectController {
 
@@ -53,9 +50,29 @@ public class ProjectController {
                 .orElseThrow(() -> new ProjectNotFoundException(String.valueOf(projectId)));
     }
 
+
+    @PostMapping
+    public ProjectDTO create(@RequestBody ProjectDTO projectDTO){
+        return projectService.create(projectDTO)
+                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
+    }
+
+
+    @PutMapping
+    public ProjectDTO update(@RequestBody ProjectDTO projectDTO){
+        return projectService.create(projectDTO)
+                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ProjectDTO delete(@PathVariable("id")Long projectId){
+        return projectService.removeById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project could not deleted: "+projectId));
+    }
+
+
     public ResponseEntity<ProjectDTO> fallBackFindById(Long projectId){
         //Project project = projectRepository.findById(projectId).get();
-
         ProjectDTO projectDTO = new ProjectDTO();
         return ResponseEntity.ok(projectDTO);
     }
