@@ -1,11 +1,15 @@
 package com.codeactuator.rocket.controller;
 
+import com.codeactuator.rocket.client.WorkforceFeignClient;
 import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dao.ProjectRepository;
+import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
+import com.codeactuator.rocket.dto.WorkforceDTO;
 import com.codeactuator.rocket.error.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "v1/projects")
@@ -32,10 +38,25 @@ public class ProjectController {
     @Autowired
     private ConfigProperties configProperties;
 
+    @Autowired
+    private WorkforceFeignClient workforceFeignClient;
+
+
+    @Value("${message:Hello Default!}")
+    private String message;
+    @Value("${eng: default}")
+    private String env;
 
     @GetMapping("/ping")
     public String ping(){
-        return configProperties.getMessage() + configProperties.getEnv();
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append("Value Message: ")
+                .append(message)
+                .append("\n")
+                .append("Properties Message: ")
+                .append(configProperties.getMessage());
+
+        return messageBuilder.toString();
     }
 
     @GetMapping
@@ -46,8 +67,18 @@ public class ProjectController {
     //@HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
     public ProjectDTO findById(@PathVariable("id")Long projectId){
-        return projectService.findById(projectId)
+        ProjectDTO projectDTO = projectService.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException(String.valueOf(projectId)));
+
+        Workforce workforce = workforceFeignClient.findById(1);
+        WorkforceDTO workforceDTO = new WorkforceDTO();
+        workforceDTO.unmarshal(workforce);
+
+        Set<WorkforceDTO> workforceDTOSet = new HashSet<>();
+        workforceDTOSet.add(workforceDTO);
+        projectDTO.setResources(workforceDTOSet);
+
+        return projectDTO;
     }
 
 

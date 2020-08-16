@@ -2,6 +2,7 @@ package com.codeactuator.rocket.service.impl;
 
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
+import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
 import com.codeactuator.rocket.error.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
@@ -38,6 +39,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Optional<ProjectDTO> update(ProjectDTO projectDTO) {
         Project project = projectDTO.marshall();
+        Workforce workforce = project.getResources()
+                .stream()
+                .collect(Collectors.toCollection(ArrayList::new))
+                .get(0);
+
+        //TODO FEIGN CLIENT HERE
+
+
         projectRepository.save(project);
         projectDTO.setId(project.getId());
         return Optional.of(projectDTO);

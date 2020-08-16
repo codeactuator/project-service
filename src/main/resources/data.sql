@@ -80,7 +80,7 @@ INSERT INTO TASKLOG (id, description, spentHrs, createdDate) values (2, 'Develop
 --private String name;
 --@OneToMany
 --private Set<Task> tasks;
---@ElementCollection
+--@OneToMany
 --private Set<Workforce> resources;
 --private Date created;
 
