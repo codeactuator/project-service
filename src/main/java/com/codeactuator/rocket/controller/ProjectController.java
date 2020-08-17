@@ -6,7 +6,7 @@ import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
 import com.codeactuator.rocket.dto.WorkforceDTO;
-import com.codeactuator.rocket.error.ProjectNotFoundException;
+import com.codeactuator.rocket.exception.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

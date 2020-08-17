@@ -4,22 +4,17 @@ import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
 import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
-import com.codeactuator.rocket.error.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static java.lang.String.*;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
