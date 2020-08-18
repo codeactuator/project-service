@@ -42,7 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
         //TODO FEIGN CLIENT HERE
 
 
-        projectRepository.save(project);
+        projectRepository.addResource(project.getId(), workforce);
         projectDTO.setId(project.getId());
         return Optional.of(projectDTO);
     }

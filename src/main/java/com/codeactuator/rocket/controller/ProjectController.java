@@ -91,7 +91,7 @@ public class ProjectController {
 
     @PutMapping
     public ProjectDTO update(@RequestBody ProjectDTO projectDTO){
-        return projectService.create(projectDTO)
+        return projectService.update(projectDTO)
                 .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
     }
 
