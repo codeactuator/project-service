@@ -15,9 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -70,14 +70,6 @@ public class ProjectController {
         ProjectDTO projectDTO = projectService.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException(String.valueOf(projectId)));
 
-        Workforce workforce = workforceFeignClient.findById(1);
-        WorkforceDTO workforceDTO = new WorkforceDTO();
-        workforceDTO.unmarshal(workforce);
-
-        Set<WorkforceDTO> workforceDTOSet = new HashSet<>();
-        workforceDTOSet.add(workforceDTO);
-        projectDTO.setResources(workforceDTOSet);
-
         return projectDTO;
     }
 
@@ -94,6 +86,17 @@ public class ProjectController {
         return projectService.update(projectDTO)
                 .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
     }
+
+    @PutMapping("/{projectId}/workforces/{workforceId}")
+    public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
+                             @PathVariable("workforceId") Long workforceId){
+
+        return projectService.resources(projectId, workforceId)
+                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectId));
+    }
+
+
+
 
     @DeleteMapping("/{id}")
     public ProjectDTO delete(@PathVariable("id")Long projectId){

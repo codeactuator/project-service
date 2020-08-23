@@ -1,10 +1,14 @@
 package com.codeactuator.rocket.service.impl;
 
+import com.codeactuator.rocket.client.WorkforceFeignClient;
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.domain.Project;
 import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
+import com.codeactuator.rocket.dto.WorkforceDTO;
+import com.codeactuator.rocket.exception.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
+import com.netflix.discovery.converters.Auto;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private WorkforceFeignClient workforceFeignClient;
+
     @Override
     public Optional<ProjectDTO> create(ProjectDTO projectDTO) {
         Project project = projectDTO.marshall();
@@ -34,16 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Optional<ProjectDTO> update(ProjectDTO projectDTO) {
         Project project = projectDTO.marshall();
-        Workforce workforce = project.getResources()
-                .stream()
-                .collect(Collectors.toCollection(ArrayList::new))
-                .get(0);
-
-        //TODO FEIGN CLIENT HERE
-
-
-        projectRepository.addResource(project.getId(), workforce);
-        projectDTO.setId(project.getId());
+        projectRepository.save(project);
         return Optional.of(projectDTO);
     }
 
@@ -127,4 +125,23 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
         return Optional.of(projectDTOList);
     }
+
+    @Override
+    public Optional<ProjectDTO> resources(Long projectId, Long workforceId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException(projectId.toString()));
+
+
+        Workforce workforce = new Workforce();
+        workforce.setId(workforceId);
+        project.addResource(workforce);
+
+        projectRepository.save(project);
+
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.unmarshal(project);
+
+        return Optional.of(projectDTO);
+    }
+
 }

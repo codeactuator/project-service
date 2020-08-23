@@ -21,7 +21,7 @@ public class ProjectCustomRepositoryImpl implements ProjectCustomRepository {
     @Override
     public void addResource(Long projectId, Workforce resource) {
         Project project = entityManager.find(Project.class, projectId);
-        project.getResources().add(resource);
+        project.getWorkforces().add(resource);
         entityManager.merge(project);
     }
 }

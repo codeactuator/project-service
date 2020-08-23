@@ -1,6 +1,7 @@
 package com.codeactuator.rocket.service;
 
 import com.codeactuator.rocket.dto.ProjectDTO;
+import com.codeactuator.rocket.dto.WorkforceDTO;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface ProjectService {
     Optional<ProjectDTO> findById(Long projectId);
     Optional<Collection<ProjectDTO>> findAll();
     Optional<Collection<ProjectDTO>> findAll(Long organizationId);
+
+    Optional<ProjectDTO> resources(Long projectId, Long workforceId);
 }
