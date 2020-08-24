@@ -2,13 +2,14 @@ package com.codeactuator.rocket.service.impl;
 
 import com.codeactuator.rocket.client.WorkforceFeignClient;
 import com.codeactuator.rocket.dao.ProjectRepository;
+import com.codeactuator.rocket.dao.TaskRepository;
 import com.codeactuator.rocket.domain.Project;
+import com.codeactuator.rocket.domain.Task;
 import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
-import com.codeactuator.rocket.dto.WorkforceDTO;
+import com.codeactuator.rocket.dto.TaskDTO;
 import com.codeactuator.rocket.exception.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
-import com.netflix.discovery.converters.Auto;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private WorkforceFeignClient workforceFeignClient;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Override
     public Optional<ProjectDTO> create(ProjectDTO projectDTO) {
@@ -137,6 +141,24 @@ public class ProjectServiceImpl implements ProjectService {
         project.addResource(workforce);
 
         projectRepository.save(project);
+
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.unmarshal(project);
+
+        return Optional.of(projectDTO);
+    }
+
+    @Override
+    public Optional<ProjectDTO> tasks(Long projectId, TaskDTO taskDTO) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException(projectId.toString()));
+
+
+        Task task = taskDTO.marshall();
+        //taskRepository.save(task);
+
+        project.getTasks().add(task);
+
 
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.unmarshal(project);

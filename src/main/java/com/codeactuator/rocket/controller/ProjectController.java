@@ -3,9 +3,8 @@ package com.codeactuator.rocket.controller;
 import com.codeactuator.rocket.client.WorkforceFeignClient;
 import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dao.ProjectRepository;
-import com.codeactuator.rocket.domain.Workforce;
 import com.codeactuator.rocket.dto.ProjectDTO;
-import com.codeactuator.rocket.dto.WorkforceDTO;
+import com.codeactuator.rocket.dto.TaskDTO;
 import com.codeactuator.rocket.exception.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "v1/projects")
@@ -84,7 +80,7 @@ public class ProjectController {
     @PutMapping
     public ProjectDTO update(@RequestBody ProjectDTO projectDTO){
         return projectService.update(projectDTO)
-                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
+                .orElseThrow(() -> new RuntimeException("Project could not updated: "+projectDTO));
     }
 
     @PutMapping("/{projectId}/workforces/{workforceId}")
@@ -92,7 +88,15 @@ public class ProjectController {
                              @PathVariable("workforceId") Long workforceId){
 
         return projectService.resources(projectId, workforceId)
-                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectId));
+                .orElseThrow(() -> new RuntimeException("Trying to add resource to invalid project: "+projectId));
+    }
+
+    @PutMapping("/{projectId}/tasks")
+    public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
+                                   @RequestBody TaskDTO taskDTO){
+
+        return projectService.tasks(projectId, taskDTO)
+                .orElseThrow(() -> new RuntimeException("Trying to create task into invalid project: "+projectId));
     }
 
 
