@@ -3,7 +3,6 @@ package com.codeactuator.rocket.dao;
 import com.codeactuator.rocket.domain.Project;
 import com.codeactuator.rocket.domain.Task;
 import com.codeactuator.rocket.dto.ProjectDTO;
-import com.codeactuator.rocket.dto.WorkforceDTO;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskStatusRepository extends CrudRepository<TaskStatus, Long> {
+
+    public TaskStatus findByName(String name);
 }
