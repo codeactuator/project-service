@@ -1,10 +1,6 @@
 package com.codeactuator.rocket.dao;
 
-
-import com.codeactuator.rocket.domain.Project;
-import com.codeactuator.rocket.domain.Task;
-import com.codeactuator.rocket.domain.TaskStatus;
-import com.codeactuator.rocket.domain.TaskType;
+import com.codeactuator.rocket.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Calendar;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class TaskRepositoryTest {
+public class TaskLogRepositoryTest {
+
 
     @Autowired
     private TaskRepository taskRepository;
@@ -27,6 +26,9 @@ public class TaskRepositoryTest {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private TaskLogRepository taskLogRepository;
 
 
     private final String PROJECT_NAME = "Infra Blue";
@@ -51,8 +53,8 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void should_create_task(){
-        createTask(TASK_NAME);
+    public void should_create_taskLog(){
+        createTaskLog(TASK_NAME);
         Task task = taskRepository.findByName(TASK_NAME);
 
         assert (task != null);
@@ -60,10 +62,11 @@ public class TaskRepositoryTest {
         assert (task.getTaskType().equals(taskTypeRepository.findByName(TASK_TYPE)));
         assert (task.getStatus().equals(taskStatusRepository.findByName(TASK_STATUS)));
         assert (task.getProject().equals(projectRepository.findByName(PROJECT_NAME)));
+        assert (task.getLogs().size() > 0);
     }
 
 
-    private Task createTask(String taskName){
+    private TaskLog createTaskLog(String taskName){
         Task task = new Task();
         task.setName(taskName);
 
@@ -74,8 +77,17 @@ public class TaskRepositoryTest {
         Project project = projectRepository.findByName(PROJECT_NAME);
         task.setProject(project);
 
+
+        TaskLog taskLog = new TaskLog();
+        taskLog.setCreatedDate(Calendar.getInstance().getTime());
+        taskLog.setSpentHrs(3.5f);
+        taskLog.setDescription("Study and analyzed the requirement specification");
+
+        task.addLogs(taskLog);
+
         taskRepository.save(task);
-        return task;
+
+
+        return taskLog;
     }
 }
-
