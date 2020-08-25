@@ -84,10 +84,7 @@ public class TaskLogRepositoryTest {
         taskLog.setDescription("Study and analyzed the requirement specification");
 
         task.addLogs(taskLog);
-
         taskRepository.save(task);
-
-
         return taskLog;
     }
 }
