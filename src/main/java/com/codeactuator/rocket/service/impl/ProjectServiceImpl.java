@@ -37,7 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Optional<ProjectDTO> create(ProjectDTO projectDTO) {
         Project project = projectDTO.marshall();
-        projectRepository.save(project);
+        project = projectRepository.save(project);
         projectDTO.setId(project.getId());
         return Optional.of(projectDTO);
     }
