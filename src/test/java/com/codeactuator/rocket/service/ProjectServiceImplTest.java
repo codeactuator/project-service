@@ -3,6 +3,7 @@ package com.codeactuator.rocket.service;
 
 import com.codeactuator.rocket.dto.ProjectDTO;
 import com.codeactuator.rocket.dto.TaskDTO;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -15,9 +16,9 @@ public class ProjectServiceImplTest {
 
 
 
-
+    @Test
     public void create(){
-
+        assert (true);
     }
 
     public void update(){

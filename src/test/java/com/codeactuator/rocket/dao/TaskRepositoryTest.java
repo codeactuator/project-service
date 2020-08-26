@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class TaskRepositoryTest {
@@ -55,11 +57,11 @@ public class TaskRepositoryTest {
         createTask(TASK_NAME);
         Task task = taskRepository.findByName(TASK_NAME);
 
-        assert (task != null);
-        assert (task.getId() > 0);
-        assert (task.getTaskType().equals(taskTypeRepository.findByName(TASK_TYPE)));
-        assert (task.getStatus().equals(taskStatusRepository.findByName(TASK_STATUS)));
-        assert (task.getProject().equals(projectRepository.findByName(PROJECT_NAME)));
+        assertThat(task).isNotNull();
+        assertThat(task.getId()).isGreaterThan(0);
+        assertThat(task.getTaskType()).isEqualTo(taskTypeRepository.findByName(TASK_TYPE));
+        assertThat(task.getStatus()).isEqualTo(taskStatusRepository.findByName(TASK_STATUS));
+        assertThat(task.getProject()).isEqualTo(projectRepository.findByName(PROJECT_NAME));
     }
 
 

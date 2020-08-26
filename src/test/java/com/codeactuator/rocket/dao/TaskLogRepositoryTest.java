@@ -1,14 +1,16 @@
 package com.codeactuator.rocket.dao;
 
 import com.codeactuator.rocket.domain.*;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.Calendar;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -57,12 +59,12 @@ public class TaskLogRepositoryTest {
         createTaskLog(TASK_NAME);
         Task task = taskRepository.findByName(TASK_NAME);
 
-        assert (task != null);
-        assert (task.getId() > 0);
-        assert (task.getTaskType().equals(taskTypeRepository.findByName(TASK_TYPE)));
-        assert (task.getStatus().equals(taskStatusRepository.findByName(TASK_STATUS)));
-        assert (task.getProject().equals(projectRepository.findByName(PROJECT_NAME)));
-        assert (task.getLogs().size() > 0);
+        assertThat(task).isNotNull();
+        assertThat(task.getId()).isGreaterThan(0);
+        assertThat(task.getTaskType()).isEqualTo(taskTypeRepository.findByName(TASK_TYPE));
+        assertThat(task.getStatus()).isEqualTo(taskStatusRepository.findByName(TASK_STATUS));
+        assertThat(task.getProject()).isEqualTo(projectRepository.findByName(PROJECT_NAME));
+        assertThat(task.getLogs()).isNotEmpty();
     }
 
 
