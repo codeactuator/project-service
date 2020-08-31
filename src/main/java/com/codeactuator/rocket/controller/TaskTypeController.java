@@ -7,10 +7,7 @@ import com.codeactuator.rocket.service.TaskTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -53,35 +50,31 @@ public class TaskTypeController implements ApplicationController<TaskTypeDTO>{
     @GetMapping
     @Override
     public Collection<TaskTypeDTO> findAll() {
-        return taskTypeService.findAll().orElseGet(() -> {
-            List<TaskTypeDTO> taskTypeDTOs = Collections.emptyList();
-            return taskTypeDTOs;
-        });
+        return taskTypeService.findAll().get();
     }
 
     @GetMapping("/{id}")
     @Override
     public TaskTypeDTO findById(@PathVariable("id") Long taskTypeId) {
-        return taskTypeService.findById(taskTypeId)
-                .orElseThrow(() -> new TaskTypeNotFoundException(String.valueOf(taskTypeId)));
+        return taskTypeService.findById(taskTypeId).get();
     }
 
+    @PostMapping
     @Override
-    public TaskTypeDTO create(TaskTypeDTO taskTypeDTO) {
-        return taskTypeService.create(taskTypeDTO)
-                .orElseThrow(() -> new RuntimeException("TaskType Could Not Created: "+taskTypeDTO.getName()));
+    public TaskTypeDTO create(@RequestBody TaskTypeDTO taskTypeDTO) {
+        return taskTypeService.create(taskTypeDTO).get();
     }
 
+    @PutMapping
     @Override
-    public TaskTypeDTO update(TaskTypeDTO taskTypeDTO) {
+    public TaskTypeDTO update(@RequestBody TaskTypeDTO taskTypeDTO) {
 
-        return taskTypeService.update(taskTypeDTO)
-                .orElseThrow(() -> new RuntimeException("TaskType Could Not Updated: "+taskTypeDTO.getName()));
+        return taskTypeService.update(taskTypeDTO).get();
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public TaskTypeDTO delete(Long id) {
-        return taskTypeService.removeById(id)
-                .orElseThrow(() -> new RuntimeException("TaskType Could Not Deleted: "+id));
+    public TaskTypeDTO delete(@PathVariable(value = "id") Long id) {
+        return taskTypeService.removeById(id).get();
     }
 }

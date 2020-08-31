@@ -6,9 +6,7 @@ import com.codeactuator.rocket.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -44,28 +42,33 @@ public class TaskController implements ApplicationController<TaskDTO> {
         return messageBuilder.toString();
     }
 
+    @GetMapping
     @Override
     public Collection<TaskDTO> findAll() {
-        return null;
+        return taskService.findAll().get();
     }
 
+    @GetMapping("/{id}")
     @Override
-    public TaskDTO findById(Long projectId) {
-        return null;
+    public TaskDTO findById(@PathVariable("id") Long id) {
+        return taskService.findById(id).get();
     }
 
+    @PostMapping
     @Override
-    public TaskDTO create(TaskDTO taskDTO) {
-        return null;
+    public TaskDTO create(@RequestBody TaskDTO taskDTO) {
+        return taskService.create(taskDTO).get();
     }
 
+    @PutMapping
     @Override
     public TaskDTO update(TaskDTO taskDTO) {
-        return null;
+        return taskService.update(taskDTO).get();
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public TaskDTO delete(Long id) {
-        return null;
+    public TaskDTO delete(@PathVariable(value = "id") Long id) {
+        return taskService.removeById(id).get();
     }
 }

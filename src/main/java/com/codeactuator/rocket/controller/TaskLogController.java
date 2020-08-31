@@ -6,9 +6,7 @@ import com.codeactuator.rocket.service.TaskLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -44,28 +42,33 @@ public class TaskLogController implements ApplicationController<TaskLogDTO> {
         return messageBuilder.toString();
     }
 
+    @GetMapping
     @Override
     public Collection<TaskLogDTO> findAll() {
-        return null;
+        return taskLogService.findAll().get();
     }
 
+    @GetMapping("/{id}")
     @Override
-    public TaskLogDTO findById(Long projectId) {
-        return null;
+    public TaskLogDTO findById(@PathVariable(value = "id") Long projectId) {
+        return taskLogService.findById(projectId).get();
     }
 
+    @PostMapping
     @Override
-    public TaskLogDTO create(TaskLogDTO taskLogDTO) {
-        return null;
+    public TaskLogDTO create(@RequestBody TaskLogDTO taskLogDTO) {
+        return taskLogService.create(taskLogDTO).get();
     }
 
+    @PutMapping
     @Override
-    public TaskLogDTO update(TaskLogDTO taskLogDTO) {
-        return null;
+    public TaskLogDTO update(@RequestBody TaskLogDTO taskLogDTO) {
+        return taskLogService.update(taskLogDTO).get();
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public TaskLogDTO delete(Long id) {
-        return null;
+    public TaskLogDTO delete(@PathVariable("id") Long id) {
+        return taskLogService.removeById(id).get();
     }
 }

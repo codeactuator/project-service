@@ -7,10 +7,7 @@ import com.codeactuator.rocket.service.TaskStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -51,35 +48,31 @@ public class TaskStatusController implements ApplicationController<TaskStatusDTO
     @GetMapping
     @Override
     public Collection<TaskStatusDTO> findAll() {
-        return taskStatusService.findAll().orElseGet(() -> {
-            List<TaskStatusDTO> taskStatusDTOS = Collections.emptyList();
-            return taskStatusDTOS;
-        });
+        return taskStatusService.findAll().get();
     }
 
     @GetMapping("/{id}")
     @Override
     public TaskStatusDTO findById(@PathVariable("id") Long taskStatusId) {
-        return taskStatusService.findById(taskStatusId)
-                .orElseThrow(() -> new TaskTypeNotFoundException(String.valueOf(taskStatusId)));
+        return taskStatusService.findById(taskStatusId).get();
     }
 
+    @PostMapping
     @Override
-    public TaskStatusDTO create(TaskStatusDTO taskStatusDTO) {
-        return taskStatusService.create(taskStatusDTO)
-                .orElseThrow(() -> new RuntimeException("TaskStatus Could Not Created: "+taskStatusDTO.getName()));
+    public TaskStatusDTO create(@RequestBody TaskStatusDTO taskStatusDTO) {
+        return taskStatusService.create(taskStatusDTO).get();
     }
 
+    @PutMapping
     @Override
-    public TaskStatusDTO update(TaskStatusDTO taskStatusDTO) {
+    public TaskStatusDTO update(@RequestBody TaskStatusDTO taskStatusDTO) {
 
-        return taskStatusService.update(taskStatusDTO)
-                .orElseThrow(() -> new RuntimeException("TaskStatus Could Not Updated: "+taskStatusDTO.getName()));
+        return taskStatusService.update(taskStatusDTO).get();
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public TaskStatusDTO delete(Long id) {
-        return taskStatusService.removeById(id)
-                .orElseThrow(() -> new RuntimeException("TaskStatus Could Not Deleted: "+id));
+    public TaskStatusDTO delete(@PathVariable(value = "id") Long id) {
+        return taskStatusService.removeById(id).get();
     }
 }

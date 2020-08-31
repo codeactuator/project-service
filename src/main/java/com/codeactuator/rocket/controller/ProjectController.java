@@ -63,8 +63,7 @@ public class ProjectController {
     //@HystrixCommand(commandKey = "byId", groupKey = "byId", fallbackMethod = "fallBackFindById")
     @GetMapping("/{id}")
     public ProjectDTO findById(@PathVariable("id")Long projectId){
-        ProjectDTO projectDTO = projectService.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException(String.valueOf(projectId)));
+        ProjectDTO projectDTO = projectService.findById(projectId).get();
 
         return projectDTO;
     }
@@ -72,31 +71,26 @@ public class ProjectController {
 
     @PostMapping
     public ProjectDTO create(@RequestBody ProjectDTO projectDTO){
-        return projectService.create(projectDTO)
-                .orElseThrow(() -> new RuntimeException("Project could not created: "+projectDTO));
+        return projectService.create(projectDTO).get();
     }
 
 
     @PutMapping
     public ProjectDTO update(@RequestBody ProjectDTO projectDTO){
-        return projectService.update(projectDTO)
-                .orElseThrow(() -> new RuntimeException("Project could not updated: "+projectDTO));
+        return projectService.update(projectDTO).get();
     }
 
     @PutMapping("/{projectId}/workforces/{workforceId}")
     public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
                              @PathVariable("workforceId") Long workforceId){
 
-        return projectService.resources(projectId, workforceId)
-                .orElseThrow(() -> new RuntimeException("Trying to add resource to invalid project: "+projectId));
+        return projectService.resources(projectId, workforceId).get();
     }
 
     @PutMapping("/{projectId}/tasks")
     public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
                                    @RequestBody TaskDTO taskDTO){
-
-        return projectService.tasks(projectId, taskDTO)
-                .orElseThrow(() -> new RuntimeException("Trying to create task into invalid project: "+projectId));
+        return projectService.tasks(projectId, taskDTO).get();
     }
 
 
@@ -104,8 +98,7 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     public ProjectDTO delete(@PathVariable("id")Long projectId){
-        return projectService.removeById(projectId)
-                .orElseThrow(() -> new RuntimeException("Project could not deleted: "+projectId));
+        return projectService.removeById(projectId).get();
     }
 
 
