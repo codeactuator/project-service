@@ -6,11 +6,13 @@ import com.codeactuator.rocket.dto.TaskLogDTO;
 import com.codeactuator.rocket.exception.TaskLogNotFoundException;
 import com.codeactuator.rocket.service.TaskLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+@Service
 public class TaskLogServiceImpl implements TaskLogService {
 
 
