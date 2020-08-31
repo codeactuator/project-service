@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Optional<TaskDTO> removeById(Long taskId) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> throw new TaskNotFoundException(String.valueOf(taskId)));
+                .orElseThrow(() -> new TaskNotFoundException(String.valueOf(taskId)));
         taskRepository.deleteById(taskId);
 
         TaskDTO taskDTO = new TaskDTO();
@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Optional<TaskDTO> findById(Long taskId) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> throw new TaskNotFoundException(String.valueOf(taskId)));
+                .orElseThrow(() -> new TaskNotFoundException(String.valueOf(taskId)));
 
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.unmarshal(task);
