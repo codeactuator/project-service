@@ -1,18 +1,15 @@
 package com.codeactuator.rocket.dao;
 
 import com.codeactuator.rocket.domain.*;
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class TaskLogRepositoryTest {
 
@@ -39,7 +36,7 @@ public class TaskLogRepositoryTest {
     private final String TASK_STATUS = "NOT STARTED";
 
 
-    @Before
+    @BeforeEach
     public void init(){
         Project project = new Project();
         project.setName(PROJECT_NAME);

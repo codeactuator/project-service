@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/taskTypes")
-@RefreshScope
+//@RefreshScope
 public class TaskTypeController implements ApplicationController<TaskTypeDTO>{
 
 
