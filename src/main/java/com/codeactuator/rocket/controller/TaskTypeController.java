@@ -68,7 +68,6 @@ public class TaskTypeController implements ApplicationController<TaskTypeDTO>{
     @PutMapping
     @Override
     public TaskTypeDTO update(@RequestBody TaskTypeDTO taskTypeDTO) {
-
         return taskTypeService.update(taskTypeDTO).get();
     }
 
