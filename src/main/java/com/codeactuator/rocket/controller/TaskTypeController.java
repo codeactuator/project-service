@@ -2,7 +2,6 @@ package com.codeactuator.rocket.controller;
 
 import com.codeactuator.rocket.config.ConfigProperties;
 import com.codeactuator.rocket.dto.TaskTypeDTO;
-import com.codeactuator.rocket.exception.TaskTypeNotFoundException;
 import com.codeactuator.rocket.service.TaskTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,13 +9,11 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 
 @RestController
 @RequestMapping("v1/taskTypes")
-//@RefreshScope
+@RefreshScope
 public class TaskTypeController implements ApplicationController<TaskTypeDTO>{
 
 
