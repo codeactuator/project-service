@@ -131,7 +131,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<ProjectDTO> resources(Long projectId, Long workforceId) {
+    public Optional<ProjectDTO> addResource(Long projectId, Long workforceId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException(projectId.toString()));
 
@@ -149,7 +149,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<ProjectDTO> tasks(Long projectId, TaskDTO taskDTO) {
+    public Optional<ProjectDTO> addTask(Long projectId, TaskDTO taskDTO) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ProjectNotFoundException(projectId.toString()));
 

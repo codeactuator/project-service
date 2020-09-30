@@ -75,6 +75,31 @@ public class TaskTypeControllerTest {
 
     }
 
+
+    @Test
+    public void testUpdate() throws Exception {
+        TaskTypeDTO requestDTO = createObject();
+        TaskTypeDTO responseDTO = createObject();
+        responseDTO.setId(1L);
+
+        //String expectedResponseJson = objectMapper.writeValueAsString(responseDTO);
+
+        //Given
+        given(taskTypeService.create(requestDTO))
+                .willReturn(Optional.of(responseDTO));
+
+        //When and Then
+        mockMvc.perform(
+                post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name").value("Bug"));
+
+    }
+
+
     @Test
     public void testFindById() throws Exception{
         TaskTypeDTO outputDTO = createObject();

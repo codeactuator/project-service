@@ -88,7 +88,7 @@ public class ProjectServiceImplTest {
     }
 
     @Test
-    public void resources(){
+    public void addResource(){
         ProjectDTO projectDTO = new ProjectDTO.Builder("Project Dummy")
                 .id(1l)
                 .workforce(new WorkforceDTO.Builder("Shekhar Kumar").build())
@@ -108,7 +108,7 @@ public class ProjectServiceImplTest {
     }
 
     @Test
-    public void tasks(){
+    public void addTask(){
         ProjectDTO projectDTO = new ProjectDTO.Builder("Project Dummyy")
                 .id(1L)
                 .task(new TaskDTO.Builder("Implementation").build())

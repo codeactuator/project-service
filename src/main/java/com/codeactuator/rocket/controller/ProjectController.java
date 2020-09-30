@@ -84,13 +84,13 @@ public class ProjectController {
     public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
                              @PathVariable("workforceId") Long workforceId){
 
-        return projectService.resources(projectId, workforceId).get();
+        return projectService.addResource(projectId, workforceId).get();
     }
 
     @PutMapping("/{projectId}/tasks")
     public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
                                    @RequestBody TaskDTO taskDTO){
-        return projectService.tasks(projectId, taskDTO).get();
+        return projectService.addTask(projectId, taskDTO).get();
     }
 
 

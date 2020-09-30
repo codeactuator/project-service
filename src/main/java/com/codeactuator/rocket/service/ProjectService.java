@@ -18,6 +18,6 @@ public interface ProjectService {
     Optional<Collection<ProjectDTO>> findAll();
     Optional<Collection<ProjectDTO>> findAll(Long organizationId);
 
-    Optional<ProjectDTO> resources(Long projectId, Long workforceId);
-    Optional<ProjectDTO> tasks(Long projectId, TaskDTO taskDTO);
+    Optional<ProjectDTO> addResource(Long projectId, Long workforceId);
+    Optional<ProjectDTO> addTask(Long projectId, TaskDTO taskDTO);
 }
