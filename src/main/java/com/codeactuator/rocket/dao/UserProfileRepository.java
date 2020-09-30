@@ -1,10 +1,10 @@
 package com.codeactuator.rocket.dao;
 
-import com.codeactuator.rocket.domain.Role;
+import com.codeactuator.rocket.domain.UserProfile;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RoleRepository extends CrudRepository<Role, Long>{
+public interface UserProfileRepository extends CrudRepository<UserProfile, Long>{
 }
