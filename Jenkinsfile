@@ -5,9 +5,15 @@ pipeline{
         stage('Build'){
             steps {
                 echo "Initiating mvn clean install!"
-                mvn compile
+                sh 'mvn install -Dmaven.test.failure.ignore=true'
                 echo "Build Stage Completed!"
             }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml'
+                }
+            }
+
         }
 
         stage('Test'){
