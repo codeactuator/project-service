@@ -1,12 +1,15 @@
 pipeline{
     agent any
 
+    tools {
+        maven 'Maven'
+        jdk 'Java8'
+    }
+
     stages {
         stage('Build'){
             steps {
-                echo "Initiating mvn clean install!"
-                sh './mvnw install -Dmaven.test.failure.ignore=true'
-                echo "Build Stage Completed!"
+                bat 'mvn -Dmaven.test.failure.ignore=true install'
             }
             post {
                 success {
