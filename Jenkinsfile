@@ -5,7 +5,7 @@ pipeline{
         stage('Build'){
             steps {
                 echo "Initiating mvn clean install!"
-                sh 'mvn install -Dmaven.test.failure.ignore=true'
+                sh './mvnw install -Dmaven.test.failure.ignore=true'
                 echo "Build Stage Completed!"
             }
             post {
