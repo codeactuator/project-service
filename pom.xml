@@ -158,7 +158,7 @@
 
 
 		<dependency>
-			<groupId>com.codeactuator.domain</groupId>
+			<groupId>com.codeactuator</groupId>
 			<artifactId>rocket-domain-objects</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
