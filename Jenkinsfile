@@ -9,7 +9,7 @@ pipeline{
     stages {
         stage('Build'){
             steps {
-                bat 'mvn clean install -Dmaven.test.failure.ignore=true'
+                bat 'mvn clean install -U -Dmaven.test.failure.ignore=true'
             }
             post {
                 success {
