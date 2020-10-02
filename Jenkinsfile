@@ -22,7 +22,7 @@ pipeline{
         stage('Test'){
             steps {
                 echo "Initiating mvn test!"
-                mvn compile
+                //mvn compile
                 echo "Test Stage Completed!"
             }
         }
