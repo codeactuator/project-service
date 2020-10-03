@@ -10,9 +10,9 @@ pipeline{
     }
 
     environment {
-        WELCOME_GREETINGS "Hello Folks!"
-        SUCCESS_MESSAGE "Successfully Done!"
-        POST_SUCCESS_MESSAGE "Preparing to run the application..."
+        WELCOME_GREETINGS = "Hello Folks!"
+        SUCCESS_MESSAGE = "Successfully Done!"
+        POST_SUCCESS_MESSAGE = "Preparing to run the application..."
     }
 
 
@@ -34,7 +34,7 @@ pipeline{
 
         stage('Test'){
             environment {
-                MESSAGE_TEST "Mix of UNIT and Integration Testing Execution!"
+                MESSAGE_TEST = "Mix of UNIT and Integration Testing Execution!"
             }
 
             steps {
