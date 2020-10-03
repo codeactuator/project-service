@@ -46,7 +46,7 @@ pipeline{
         stage('Deploy'){
             steps {
                 echo 'Running Deploy Stage'
-                bat 'mvn deploy -Dmaven.test.skip=true';
+                bat 'mvn clean deploy -Dmaven.test.skip=true';
                 echo 'Deploy Stage Done!'
                 echo "Pipeline: ${SUCCESS_MESSAGE}"
             }
