@@ -49,7 +49,7 @@ public class ProjectController {
         messageBuilder.append("Value Message: ")
                 .append(message)
                 .append("\n")
-                .append("Properties Message: ")
+                .append("Properties Message123: ")
                 .append(configProperties.getMessage());
 
         return messageBuilder.toString();
