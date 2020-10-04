@@ -52,7 +52,7 @@ public class ProjectController {
                 .append("Properties Message: ")
                 .append(configProperties.getMessage())
                 .append("\n")
-                .append("Testing Github Commit Trigger");
+                .append("Testing Github WebHook with NGROK");
 
         return messageBuilder.toString();
     }
