@@ -49,8 +49,10 @@ public class ProjectController {
         messageBuilder.append("Value Message: ")
                 .append(message)
                 .append("\n")
-                .append("Properties Message123: ")
-                .append(configProperties.getMessage());
+                .append("Properties Message: ")
+                .append(configProperties.getMessage())
+                .append("\n")
+                .append("Testing Github Commit Trigger");
 
         return messageBuilder.toString();
     }
