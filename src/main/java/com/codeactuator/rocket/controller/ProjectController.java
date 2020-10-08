@@ -90,7 +90,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}/tasks")
-    public ProjectDTO addResources(@PathVariable("projectId") Long projectId,
+    public ProjectDTO addTasks(@PathVariable("projectId") Long projectId,
                                    @RequestBody TaskDTO taskDTO){
         return projectService.addTask(projectId, taskDTO).get();
     }
