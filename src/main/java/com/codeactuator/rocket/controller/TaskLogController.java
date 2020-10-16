@@ -1,6 +1,6 @@
 package com.codeactuator.rocket.controller;
 
-import com.codeactuator.rocket.config.ConfigProperties;
+import com.codeactuator.rocket.config.PropertiesConfig;
 import com.codeactuator.rocket.dto.TaskLogDTO;
 import com.codeactuator.rocket.service.TaskLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class TaskLogController implements ApplicationController<TaskLogDTO> {
     private TaskLogService taskLogService;
 
     @Autowired
-    private ConfigProperties configProperties;
+    private PropertiesConfig propertiesConfig;
 
     @Value("${message:Hello Default!}")
     private String message;
@@ -37,7 +37,7 @@ public class TaskLogController implements ApplicationController<TaskLogDTO> {
                 .append(message)
                 .append("\n")
                 .append("Properties Message: ")
-                .append(configProperties.getMessage());
+                .append(propertiesConfig.getMessage());
 
         return messageBuilder.toString();
     }

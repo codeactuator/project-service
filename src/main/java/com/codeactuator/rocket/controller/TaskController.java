@@ -1,6 +1,6 @@
 package com.codeactuator.rocket.controller;
 
-import com.codeactuator.rocket.config.ConfigProperties;
+import com.codeactuator.rocket.config.PropertiesConfig;
 import com.codeactuator.rocket.dto.TaskDTO;
 import com.codeactuator.rocket.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class TaskController implements ApplicationController<TaskDTO> {
     private TaskService taskService;
 
     @Autowired
-    private ConfigProperties configProperties;
+    private PropertiesConfig propertiesConfig;
 
     @Value("${message:Hello Default!}")
     private String message;
@@ -37,7 +37,7 @@ public class TaskController implements ApplicationController<TaskDTO> {
                 .append(message)
                 .append("\n")
                 .append("Properties Message: ")
-                .append(configProperties.getMessage());
+                .append(propertiesConfig.getMessage());
 
         return messageBuilder.toString();
     }

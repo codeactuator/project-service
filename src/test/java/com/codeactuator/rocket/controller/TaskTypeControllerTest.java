@@ -1,7 +1,7 @@
 package com.codeactuator.rocket.controller;
 
 
-import com.codeactuator.rocket.config.ConfigProperties;
+import com.codeactuator.rocket.config.PropertiesConfig;
 import com.codeactuator.rocket.dto.TaskTypeDTO;
 import com.codeactuator.rocket.service.TaskTypeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +41,7 @@ public class TaskTypeControllerTest {
     private TaskTypeService taskTypeService;
 
     @MockBean
-    private ConfigProperties configProperties;
+    private PropertiesConfig propertiesConfig;
 
     private final String ENDPOINT = "/v1/taskTypes";
 

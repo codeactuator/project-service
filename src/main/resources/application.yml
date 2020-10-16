@@ -1,5 +1,8 @@
 server:
   port: 0
+  servlet:
+    context-path: /api
+
 
 spring:
   application:
@@ -15,14 +18,17 @@ spring:
       settings:
         web-allow-others: true
 
+
+
 eureka:
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://18.225.8.32:8761/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     preferIpAddress: true
+
 
 
 user:

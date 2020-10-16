@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties
 @Data
-public class ConfigProperties {
+public class PropertiesConfig {
 
     private String message;
     private String env;

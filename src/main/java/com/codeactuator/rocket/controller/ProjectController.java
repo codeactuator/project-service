@@ -1,11 +1,10 @@
 package com.codeactuator.rocket.controller;
 
 import com.codeactuator.rocket.client.WorkforceFeignClient;
-import com.codeactuator.rocket.config.ConfigProperties;
+import com.codeactuator.rocket.config.PropertiesConfig;
 import com.codeactuator.rocket.dao.ProjectRepository;
 import com.codeactuator.rocket.dto.ProjectDTO;
 import com.codeactuator.rocket.dto.TaskDTO;
-import com.codeactuator.rocket.exception.ProjectNotFoundException;
 import com.codeactuator.rocket.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +31,7 @@ public class ProjectController {
     private RestTemplate restTemplate;
 
     @Autowired
-    private ConfigProperties configProperties;
+    private PropertiesConfig propertiesConfig;
 
     @Autowired
     private WorkforceFeignClient workforceFeignClient;
@@ -50,7 +49,7 @@ public class ProjectController {
                 .append(message)
                 .append("\n")
                 .append("Properties Message: ")
-                .append(configProperties.getMessage())
+                .append(propertiesConfig.getMessage())
                 .append("\n")
                 .append("Testing Github WebHook with NGROK 123");
 
