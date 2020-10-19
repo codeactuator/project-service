@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class TaskStatusServiceMpl implements TaskStatusService {
+public class TaskStatusServiceImpl implements TaskStatusService {
 
 
     @Autowired
